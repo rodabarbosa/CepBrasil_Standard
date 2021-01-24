@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sirb.CepBrasil\Sirb.CepBrasil.csproj" />
+    <ProjectReference Include="..\Sirb.CepBrasil_Standard\Sirb.CepBrasil_Standard.csproj" />
   </ItemGroup>
 
 </Project>

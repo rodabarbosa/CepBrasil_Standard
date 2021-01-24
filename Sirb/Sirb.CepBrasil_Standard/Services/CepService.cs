@@ -1,12 +1,12 @@
+using Sirb.CepBrasil_Standard.Extensions;
+using Sirb.CepBrasil_Standard.Interfaces;
+using Sirb.CepBrasil_Standard.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Sirb.CepBrasil.Extensions;
-using Sirb.CepBrasil.Interfaces;
-using Sirb.CepBrasil.Models;
 
-namespace Sirb.CepBrasil.Services
+namespace Sirb.CepBrasil_Standard.Services
 {
 	public sealed class CepService : ICepService, IDisposable
 	{

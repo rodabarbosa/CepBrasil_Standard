@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Sirb.CepBrasil.Extensions
+namespace Sirb.CepBrasil_Standard.Extensions
 {
 	public static class ExceptionExtension
 	{

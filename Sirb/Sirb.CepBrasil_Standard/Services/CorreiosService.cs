@@ -1,15 +1,15 @@
+using Sirb.CepBrasil_Standard.Exceptions;
+using Sirb.CepBrasil_Standard.Extensions;
+using Sirb.CepBrasil_Standard.Interfaces;
+using Sirb.CepBrasil_Standard.Messages;
+using Sirb.CepBrasil_Standard.Models;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Sirb.CepBrasil.Exceptions;
-using Sirb.CepBrasil.Extensions;
-using Sirb.CepBrasil.Interfaces;
-using Sirb.CepBrasil.Messages;
-using Sirb.CepBrasil.Models;
 
-namespace Sirb.CepBrasil.Services
+namespace Sirb.CepBrasil_Standard.Services
 {
 	internal sealed class CorreiosService : ICepServiceControl
 	{
@@ -30,14 +30,18 @@ namespace Sirb.CepBrasil.Services
 
 		private async Task<string> GetFromService(string cep)
 		{
-			using var request = new HttpRequestMessage { Method = HttpMethod.Post, RequestUri = new Uri(CorreiosUrl) };
-			request.Content = GetRequestContent(cep);
+			using (var request = new HttpRequestMessage { Method = HttpMethod.Post, RequestUri = new Uri(CorreiosUrl) })
+			{
+				request.Content = GetRequestContent(cep);
 
-			using HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-			string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-			ServiceException.When(!response.IsSuccessStatusCode, GetFaultString(responseString));
+				using (HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false))
+				{
+					string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+					ServiceException.When(!response.IsSuccessStatusCode, GetFaultString(responseString));
 
-			return responseString;
+					return responseString;
+				}
+			}
 		}
 
 		private static HttpContent GetRequestContent(string cep) => new StringContent(BuildSoapBody(cep), Encoding.UTF8, "application/xml");

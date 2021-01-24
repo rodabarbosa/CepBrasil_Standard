@@ -1,11 +1,10 @@
-using System;
+using Sirb.CepBrasil_Standard.Models;
+using Sirb.CepBrasil_Standard.Services;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using Sirb.CepBrasil.Services;
-using Sirb.CepBrasil.Models;
 
-namespace Sirb.CepBrasilTest
+namespace Sirb.CepBrasil_StandardTest
 {
 	public sealed class CepServiceTest
 	{

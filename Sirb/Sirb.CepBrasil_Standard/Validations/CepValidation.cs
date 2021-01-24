@@ -1,8 +1,8 @@
-using Sirb.CepBrasil.Exceptions;
-using Sirb.CepBrasil.Extensions;
-using Sirb.CepBrasil.Messages;
+using Sirb.CepBrasil_Standard.Exceptions;
+using Sirb.CepBrasil_Standard.Extensions;
+using Sirb.CepBrasil_Standard.Messages;
 
-namespace Sirb.CepBrasil.Validations
+namespace Sirb.CepBrasil_Standard.Validations
 {
 	internal class CepValidation
 	{

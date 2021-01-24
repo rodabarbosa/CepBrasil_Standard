@@ -1,6 +1,6 @@
 using System;
 
-namespace Sirb.CepBrasil.Exceptions
+namespace Sirb.CepBrasil_Standard.Exceptions
 {
 	public sealed class ServiceException : Exception
 	{

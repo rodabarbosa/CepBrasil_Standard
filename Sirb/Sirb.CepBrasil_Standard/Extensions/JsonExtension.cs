@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Sirb.CepBrasil.Extensions
+namespace Sirb.CepBrasil_Standard.Extensions
 {
 	public static class JsonExtension
 	{

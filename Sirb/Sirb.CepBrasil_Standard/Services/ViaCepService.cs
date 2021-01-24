@@ -1,14 +1,14 @@
+using Sirb.CepBrasil_Standard.Exceptions;
+using Sirb.CepBrasil_Standard.Extensions;
+using Sirb.CepBrasil_Standard.Interfaces;
+using Sirb.CepBrasil_Standard.Messages;
+using Sirb.CepBrasil_Standard.Models;
+using Sirb.CepBrasil_Standard.Validations;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Sirb.CepBrasil.Exceptions;
-using Sirb.CepBrasil.Extensions;
-using Sirb.CepBrasil.Interfaces;
-using Sirb.CepBrasil.Messages;
-using Sirb.CepBrasil.Models;
-using Sirb.CepBrasil.Validations;
 
-namespace Sirb.CepBrasil.Services
+namespace Sirb.CepBrasil_Standard.Services
 {
 	internal sealed class ViaCepService : ICepServiceControl
 	{
@@ -31,13 +31,16 @@ namespace Sirb.CepBrasil.Services
 		private async Task<string> GetFromService(string cep)
 		{
 			string url = BuildRequestUrl(cep);
-			using var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(url) };
-			using HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+			using (var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(url) })
+			{
+				using (HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false))
+				{
+					string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+					ServiceException.When(!response.IsSuccessStatusCode, CepMessage.ExceptionServiceError);
 
-			string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-			ServiceException.When(!response.IsSuccessStatusCode, CepMessage.ExceptionServiceError);
-
-			return responseString;
+					return responseString;
+				}
+			}
 		}
 
 		private static string BuildRequestUrl(string cep) => $"https://viacep.com.br/ws/{cep}/json";

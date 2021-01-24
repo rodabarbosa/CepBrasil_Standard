@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sirb.CepBrasil.Models
+namespace Sirb.CepBrasil_Standard.Models
 {
 	/// <summary>
 	/// Container com resultado da busca de logradouro por CEP
