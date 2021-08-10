@@ -66,7 +66,7 @@ namespace Sirb.CepBrasil_Standard.Services
 			if (result.Count == 0)
 				return tagNotFoundMessage;
 
-			return result[0].Value.Replace($"</{tagName}>", string.Empty).Replace($"<{tagName}>", string.Empty);
+			return result[0].Value.Replace($"</{tagName}>", "").Replace($"<{tagName}>", "");
 		}
 
 		private static string GetFaultString(string response) => GetTagValue(response, "faultstring", CepMessage.ExceptionServiceError);

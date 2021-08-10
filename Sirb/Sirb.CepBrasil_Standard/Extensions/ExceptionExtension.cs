@@ -13,7 +13,7 @@ namespace Sirb.CepBrasil_Standard.Extensions
 		public static string AllMessages(this Exception e)
 		{
 			if (e == null)
-				return string.Empty;
+				return ""; // using string.Empty does consume than stating an empty string
 
 			var sb = new StringBuilder(e.Message);
 			if (e.InnerException != null)
