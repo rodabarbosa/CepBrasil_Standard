@@ -9,6 +9,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.csproj.DotSettings
+*.sln.DotSettings.user
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -342,3 +344,4 @@ healthchecksdb
 
 
 */.sonarqube
+debug.log
