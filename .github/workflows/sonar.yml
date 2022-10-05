@@ -43,5 +43,7 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"rodabarbosa_CepBrasil_Standard" /o:"rodabarbosa" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build .\Sirb\Sirb.sln --configuration Release
+          dotnet build .\Sirb\Sirb.CepBrasil.sln --configuration Release
+          dotnet test .\Sirb\Sirb.CepBrasil.sln --no-build --collect:"XPlat Code Coverage"
+          .\.sonar\scanner\reportgenerator "-reports:*\TestResults\*\coverage.cobertura.xml" "-targetdir:sonarqubecoverage" "-reporttypes:SonarQube"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

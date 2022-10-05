@@ -9,7 +9,7 @@ namespace Sirb.CepBrasil_StandardTest.Extensions
         [Fact]
         public void ToJson_Test()
         {
-            var container = new CepContainer
+            CepContainer container = new CepContainer
             {
                 Uf = "TEST",
                 Cidade = "TEST",
@@ -19,20 +19,19 @@ namespace Sirb.CepBrasil_StandardTest.Extensions
                 Cep = "TEST"
             };
 
-            var result = container.ToJson();
+            string result = container.ToJson();
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);
-            Assert.IsType<string>(result);
+            _ = Assert.IsType<string>(result);
         }
 
         [Theory]
-        [InlineData("{\"uf\":\"TEST\",\"localidade\":\"TEST\",\"bairro\":\"TEST\",\"complemento\":\"TEST\",\"logradouro\":\"TEST\",\"cep\":\"TEST\"}")]
+        [InlineData(/*lang=json,strict*/ "{\"uf\":\"TEST\",\"localidade\":\"TEST\",\"bairro\":\"TEST\",\"complemento\":\"TEST\",\"logradouro\":\"TEST\",\"cep\":\"TEST\"}")]
         public void FromJson_Test(string value)
         {
             var result = value.FromJson<CepContainer>();
             Assert.NotNull(result);
         }
-
     }
 }

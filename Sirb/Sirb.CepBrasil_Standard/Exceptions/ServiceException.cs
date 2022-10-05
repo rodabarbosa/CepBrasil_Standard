@@ -1,48 +1,49 @@
 using System;
 
-namespace Sirb.CepBrasil_Standard.Exceptions;
-
-[Serializable]
-public sealed class ServiceException : Exception
+namespace Sirb.CepBrasil_Standard.Exceptions
 {
-    [NonSerialized] private const string DefaultMessage = "Unexpected error occurred in the service.";
-
-    public ServiceException() : this(DefaultMessage)
+    [Serializable]
+    public sealed class ServiceException : Exception
     {
-    }
+        [NonSerialized] private const string DefaultMessage = "Unexpected error occurred in the service.";
 
-    public ServiceException(string message) : this(message, null)
-    {
-    }
+        public ServiceException() : this(DefaultMessage)
+        {
+        }
 
-    public ServiceException(Exception innerException) : this(DefaultMessage, innerException)
-    {
-    }
+        public ServiceException(string message) : this(message, null)
+        {
+        }
 
-    public ServiceException(string message, Exception innerException) : base(DefineMessage(message, DefaultMessage), innerException)
-    {
-    }
+        public ServiceException(Exception innerException) : this(DefaultMessage, innerException)
+        {
+        }
 
-    private static string DefineMessage(string message, string fallbackMessage)
-    {
-        return !string.IsNullOrEmpty(message?.Trim()) ? message : fallbackMessage;
-    }
+        public ServiceException(string message, Exception innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+        {
+        }
 
-    [Obsolete("Use ThrowIf instead.")]
-    public static void When(bool condition, string message, Exception innerException = null)
-    {
-        ThrowIf(condition, message, innerException);
-    }
+        private static string DefineMessage(string message, string fallbackMessage)
+        {
+            return !string.IsNullOrEmpty(message?.Trim()) ? message : fallbackMessage;
+        }
 
-    /// <summary>
-    /// Throws ServiceException when condition are met.
-    /// </summary>
-    /// <param name="condition">Condition for exception</param>
-    /// <param name="message">Exception message</param>
-    /// <param name="innerException">Inner exception</param>
-    public static void ThrowIf(bool condition, string message, Exception innerException = null)
-    {
-        if (condition)
-            throw new ServiceException(message, innerException);
+        [Obsolete("Use ThrowIf instead.")]
+        public static void When(bool condition, string message, Exception innerException = null)
+        {
+            ThrowIf(condition, message, innerException);
+        }
+
+        /// <summary>
+        /// Throws ServiceException when condition are met.
+        /// </summary>
+        /// <param name="condition">Condition for exception</param>
+        /// <param name="message">Exception message</param>
+        /// <param name="innerException">Inner exception</param>
+        public static void ThrowIf(bool condition, string message, Exception innerException = null)
+        {
+            if (condition)
+                throw new ServiceException(message, innerException);
+        }
     }
 }
