@@ -26,6 +26,7 @@ namespace Sirb.CepBrasil_Standard.Models
         /// <summary>
         /// Lista de exceções geradas
         /// </summary>
-        public List<Exception> Exceptions { get; } = new List<Exception>();
+        public List<Exception> Exceptions { get; set; } = new List<Exception>();
+
     }
 }

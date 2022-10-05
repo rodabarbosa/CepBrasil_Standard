@@ -1,13 +1,13 @@
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Sirb.CepBrasil_Standard.Exceptions;
 using Sirb.CepBrasil_Standard.Extensions;
 using Sirb.CepBrasil_Standard.Interfaces;
 using Sirb.CepBrasil_Standard.Messages;
 using Sirb.CepBrasil_Standard.Models;
 using Sirb.CepBrasil_Standard.Validations;
-using System;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("Sirb.CepBrasil_StandardTest")]
 
@@ -27,6 +27,7 @@ namespace Sirb.CepBrasil_Standard.Services
             CepValidation.Validate(cep);
 
             var response = await GetFromService(cep.RemoveMask());
+
             ServiceException.ThrowIf(string.IsNullOrEmpty(response), CepMessage.ExceptionEmptyResponse);
             return ConverterCepResult(response);
         }
@@ -39,6 +40,7 @@ namespace Sirb.CepBrasil_Standard.Services
                 using (var response = await _httpClient.SendAsync(request).ConfigureAwait(false))
                 {
                     var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                     ServiceException.ThrowIf(!response.IsSuccessStatusCode, CepMessage.ExceptionServiceError);
 
                     return responseString;

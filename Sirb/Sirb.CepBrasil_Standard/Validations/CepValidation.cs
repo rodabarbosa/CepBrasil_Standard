@@ -2,7 +2,9 @@ using Sirb.CepBrasil_Standard.Exceptions;
 using Sirb.CepBrasil_Standard.Extensions;
 using Sirb.CepBrasil_Standard.Messages;
 
-namespace Sirb.CepBrasil_Standard.Validations
+namespace Sirb.CepBrasil_Standard.Validations;
+
+internal static class CepValidation
 {
     internal static class CepValidation
     {

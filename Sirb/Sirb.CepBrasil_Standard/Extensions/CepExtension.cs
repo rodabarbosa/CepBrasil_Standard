@@ -12,7 +12,7 @@ namespace Sirb.CepBrasil_Standard.Extensions
         public static string RemoveMask(this string value)
         {
             if (string.IsNullOrEmpty(value?.Trim()))
-                return value;
+                return default;
 
             return Regex.Replace(value, @"[^\d]", string.Empty);
         }
@@ -25,7 +25,7 @@ namespace Sirb.CepBrasil_Standard.Extensions
         public static string CepMask(this string value)
         {
             if (string.IsNullOrEmpty(value?.Trim()))
-                return value;
+                return default;
 
             return Regex.Replace(RemoveMask(value), @"(\d{5})(\d{3})", "$1-$2");
         }

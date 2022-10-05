@@ -1,14 +1,14 @@
-using Sirb.CepBrasil_Standard.Exceptions;
-using Sirb.CepBrasil_Standard.Extensions;
-using Sirb.CepBrasil_Standard.Interfaces;
-using Sirb.CepBrasil_Standard.Messages;
-using Sirb.CepBrasil_Standard.Models;
 using System;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Sirb.CepBrasil_Standard.Exceptions;
+using Sirb.CepBrasil_Standard.Extensions;
+using Sirb.CepBrasil_Standard.Interfaces;
+using Sirb.CepBrasil_Standard.Messages;
+using Sirb.CepBrasil_Standard.Models;
 
 [assembly: InternalsVisibleTo("Sirb.CepBrasil_StandardTest")]
 
@@ -27,6 +27,7 @@ namespace Sirb.CepBrasil_Standard.Services
         public async Task<CepContainer> Find(string cep)
         {
             var response = await GetFromService(cep.RemoveMask());
+
             ServiceException.ThrowIf(string.IsNullOrEmpty(response), CepMessage.ExceptionEmptyResponse);
             return ConvertResult(response);
         }
@@ -40,6 +41,7 @@ namespace Sirb.CepBrasil_Standard.Services
                 using (var response = await _httpClient.SendAsync(request).ConfigureAwait(false))
                 {
                     var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                     ServiceException.ThrowIf(!response.IsSuccessStatusCode, GetFaultString(responseString));
 
                     return responseString;
@@ -68,11 +70,12 @@ namespace Sirb.CepBrasil_Standard.Services
 
         private static string GetTagValue(string rawValue, string tagName, string tagNotFoundMessage = null)
         {
-            var result = Regex.Matches(rawValue, $"<{tagName}>(.*?)</{tagName}>");
+            MatchCollection result = Regex.Matches(rawValue, $"<{tagName}>(.*?)</{tagName}>");
             if (result.Count == 0)
                 return tagNotFoundMessage;
 
-            return result[0].Value.Replace($"</{tagName}>", "").Replace($"<{tagName}>", string.Empty);
+            return result[0].Value.Replace($"</{tagName}>", string.Empty)
+                .Replace($"<{tagName}>", string.Empty);
         }
 
         private static string GetFaultString(string response)
