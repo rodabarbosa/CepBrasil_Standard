@@ -17,7 +17,7 @@ namespace Sirb.CepBrasil_Standard.Extensions
             return JsonConvert.SerializeObject(value, settings ?? Settings());
         }
 
-        /// <summary>
+        /// <summary
         /// Convert JSON string to especified class type.
         /// </summary>
         /// <typeparam name="T">Convert to type</typeparam>

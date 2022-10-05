@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ using Sirb.CepBrasil_Standard.Extensions;
 using Sirb.CepBrasil_Standard.Interfaces;
 using Sirb.CepBrasil_Standard.Messages;
 using Sirb.CepBrasil_Standard.Models;
+
+[assembly: InternalsVisibleTo("Sirb.CepBrasil_StandardTest")]
 
 namespace Sirb.CepBrasil_Standard.Services
 {
@@ -23,7 +26,8 @@ namespace Sirb.CepBrasil_Standard.Services
 
         public async Task<CepContainer> Find(string cep)
         {
-            string response = await GetFromService(cep.RemoveMask());
+            var response = await GetFromService(cep.RemoveMask());
+
             ServiceException.ThrowIf(string.IsNullOrEmpty(response), CepMessage.ExceptionEmptyResponse);
             return ConvertResult(response);
         }
@@ -34,9 +38,10 @@ namespace Sirb.CepBrasil_Standard.Services
             {
                 request.Content = GetRequestContent(cep);
 
-                using (HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false))
+                using (var response = await _httpClient.SendAsync(request).ConfigureAwait(false))
                 {
-                    string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                     ServiceException.ThrowIf(!response.IsSuccessStatusCode, GetFaultString(responseString));
 
                     return responseString;

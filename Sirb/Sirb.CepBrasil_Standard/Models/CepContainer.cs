@@ -8,39 +8,33 @@ namespace Sirb.CepBrasil_Standard.Models
     public sealed class CepContainer
     {
         /// <summary>
-        /// State abbreviation /// Sigla do estado
+        /// State abbreviation - Sigla do estado
         /// </summary>
-        [JsonProperty("uf")]
-        public string Uf { get; set; }
+        [JsonProperty("uf")] public string Uf { get; set; }
 
         /// <summary>
-        /// City name /// Nome da cidade
+        /// City name - Nome da cidade
         /// </summary>
-        [JsonProperty("localidade")]
-        public string Cidade { get; set; }
+        [JsonProperty("localidade")] public string Cidade { get; set; }
 
         /// <summary>
-        /// Neighborhood name /// Nome do bairro
+        /// Neighborhood name - Nome do bairro
         /// </summary>
-        [JsonProperty("bairro")]
-        public string Bairro { get; set; }
+        [JsonProperty("bairro")] public string Bairro { get; set; }
 
         /// <summary>
         /// Extra information /// Complemento
         /// </summary>
-        [JsonProperty("complemento")]
-        public string Complemento { get; set; }
+        [JsonProperty("complemento")] public string Complemento { get; set; }
 
         /// <summary>
-        /// Street name /// Logradouro
+        /// Street name - Logradouro
         /// </summary>
-        [JsonProperty("logradouro")]
-        public string Logradouro { get; set; }
+        [JsonProperty("logradouro")] public string Logradouro { get; set; }
 
         /// <summary>
-        /// Zip code /// CEP
+        /// Zip code - CEP
         /// </summary>
-        [JsonProperty("cep")]
-        public string Cep { get; set; }
+        [JsonProperty("cep")] public string Cep { get; set; }
     }
 }

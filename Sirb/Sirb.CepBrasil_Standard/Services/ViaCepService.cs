@@ -7,6 +7,9 @@ using Sirb.CepBrasil_Standard.Interfaces;
 using Sirb.CepBrasil_Standard.Messages;
 using Sirb.CepBrasil_Standard.Models;
 using Sirb.CepBrasil_Standard.Validations;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Sirb.CepBrasil_StandardTest")]
 
 namespace Sirb.CepBrasil_Standard.Services
 {
@@ -23,19 +26,21 @@ namespace Sirb.CepBrasil_Standard.Services
         {
             CepValidation.Validate(cep);
 
-            string response = await GetFromService(cep.RemoveMask());
+            var response = await GetFromService(cep.RemoveMask());
+
             ServiceException.ThrowIf(string.IsNullOrEmpty(response), CepMessage.ExceptionEmptyResponse);
             return ConverterCepResult(response);
         }
 
         private async Task<string> GetFromService(string cep)
         {
-            string url = BuildRequestUrl(cep);
+            var url = BuildRequestUrl(cep);
             using (var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(url) })
             {
-                using (HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false))
+                using (var response = await _httpClient.SendAsync(request).ConfigureAwait(false))
                 {
-                    string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                     ServiceException.ThrowIf(!response.IsSuccessStatusCode, CepMessage.ExceptionServiceError);
 
                     return responseString;
