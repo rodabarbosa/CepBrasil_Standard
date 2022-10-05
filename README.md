@@ -4,6 +4,8 @@ O projeto tem como objetivo viabilizar uma interface para busca de logradouro po
 
 Os serviços utilizados pelo projeto ***não*** é de responsabilidade e/ou mantido pelo mesmo.
 
+***Este projeto esta sendo descontinuado para qualquer futura correção ou alteração utilizar [CepBrasil](https://github.com/rodabarbosa/Sirb.CepBrasil)***
+
 ## Execução do serviço
 
 Os serviços externos utilizados são disponibilizados pelos Correios e ViaCep. Se a busca em ambos os serviços não tenha resulta o serviço irá definir a busca como ***não sucesso***.A implementação desta interface funciona da seguinte forma:
@@ -35,7 +37,6 @@ Os serviços externos utilizados são disponibilizados pelos Correios e ViaCep. 
 
 ## Composição
 
-
 ### CepResult
 
 Success: bool
@@ -51,16 +52,23 @@ Bairro: string
 Complemento: string
 Cep: string
 
-
 ## Informações Adicionais
 
-Para informações sobre o serviço dos Correios, visite https://www.correios.com.br/enviar-e-receber/precisa-de-ajuda/ ou https://www.correios.com.br/enviar-e-receber/precisa-de-ajuda/Manual_de_Implementacao_do_Web_Service_SIGEP_WEB.pdf
+Para informações sobre o serviço dos Correios, visite <https://www.correios.com.br/enviar-e-receber/precisa-de-ajuda/> ou <https://www.correios.com.br/enviar-e-receber/precisa-de-ajuda/Manual_de_Implementacao_do_Web_Service_SIGEP_WEB.pdf>
 
-Para informações sobre ViaCEP, visite https://viacep.com.br/;
+Para informações sobre ViaCEP, visite <https://viacep.com.br/>;
 
 ## Nota
 
 Os demais métodos disponibilizados pelo serviço dos Correios no qual é necessário cadastro de usuário e todo o processo que envolva ou relacione a cadastro de usuário não será disponível nesta interface.
+
+### Versão 1.0.2
+
+Inclusão .NET 7
+
+### Versão 1.0.1
+
+Inclusão .NET 6
 
 ### Versão 1.0.0
 

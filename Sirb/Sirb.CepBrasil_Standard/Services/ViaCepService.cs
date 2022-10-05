@@ -6,45 +6,54 @@ using Sirb.CepBrasil_Standard.Models;
 using Sirb.CepBrasil_Standard.Validations;
 using System;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("Sirb.CepBrasil_StandardTest")]
 
 namespace Sirb.CepBrasil_Standard.Services
 {
-	internal sealed class ViaCepService : ICepServiceControl
-	{
-		private readonly HttpClient _httpClient;
+    internal sealed class ViaCepService : ICepServiceControl
+    {
+        private readonly HttpClient _httpClient;
 
-		public ViaCepService(HttpClient httpClient)
-		{
-			_httpClient = httpClient;
-		}
+        public ViaCepService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
-		public async Task<CepContainer> Find(string cep)
-		{
-			CepValidation.Validate(cep);
+        public async Task<CepContainer> Find(string cep)
+        {
+            CepValidation.Validate(cep);
 
-			string response = await GetFromService(cep.RemoveMask());
-			ServiceException.When(string.IsNullOrEmpty(response), CepMessage.ExceptionEmptyResponse);
-			return ConverterCepResult(response);
-		}
+            var response = await GetFromService(cep.RemoveMask());
+            ServiceException.ThrowIf(string.IsNullOrEmpty(response), CepMessage.ExceptionEmptyResponse);
+            return ConverterCepResult(response);
+        }
 
-		private async Task<string> GetFromService(string cep)
-		{
-			string url = BuildRequestUrl(cep);
-			using (var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(url) })
-			{
-				using (HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false))
-				{
-					string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-					ServiceException.When(!response.IsSuccessStatusCode, CepMessage.ExceptionServiceError);
+        private async Task<string> GetFromService(string cep)
+        {
+            var url = BuildRequestUrl(cep);
+            using (var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(url) })
+            {
+                using (var response = await _httpClient.SendAsync(request).ConfigureAwait(false))
+                {
+                    var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ServiceException.ThrowIf(!response.IsSuccessStatusCode, CepMessage.ExceptionServiceError);
 
-					return responseString;
-				}
-			}
-		}
+                    return responseString;
+                }
+            }
+        }
 
-		private static string BuildRequestUrl(string cep) => $"https://viacep.com.br/ws/{cep}/json";
+        private static string BuildRequestUrl(string cep)
+        {
+            return $"https://viacep.com.br/ws/{cep}/json";
+        }
 
-		private static CepContainer ConverterCepResult(string response) => response.FromJson<CepContainer>();
-	}
+        private static CepContainer ConverterCepResult(string response)
+        {
+            return response.FromJson<CepContainer>();
+        }
+    }
 }
