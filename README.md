@@ -64,7 +64,7 @@ Os demais métodos disponibilizados pelo serviço dos Correios no qual é necess
 
 ### Versão 1.0.2
 
-Inclusão .NET 7
+Minor fixes
 
 ### Versão 1.0.1
 
